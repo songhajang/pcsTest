@@ -6,57 +6,6 @@ import "./App.css";
 import Post from "./component/post";
 import Alarm from "./component/alarm";
 
-const DUMMY_DATA = [
-  {
-    id: 1,
-    createdAt: "2022-10-11",
-    title: "제목입니다",
-    likeCount: 10,
-  },
-  {
-    id: 2,
-    createdAt: "2022-10-11",
-    title: "dd",
-    likeCount: 10,
-  },
-  {
-    id: 3,
-    createdAt: "2022-10-11",
-    title: "제목입니다",
-    likeCount: 10,
-  },
-  {
-    id: 4,
-    createdAt: "2022-10-11",
-    title: "제목입니다",
-    likeCount: 10,
-  },
-  {
-    id: 4,
-    createdAt: "2022-10-11",
-    title: "제목입니다",
-    likeCount: 10,
-  },
-  {
-    id: 4,
-    createdAt: "2022-10-11",
-    title: "제목입니다",
-    likeCount: 10,
-  },
-  {
-    id: 4,
-    createdAt: "2022-10-11",
-    title: "제목입니다",
-    likeCount: 10,
-  },
-  {
-    id: 4,
-    createdAt: "2022-10-11",
-    title: "제목입니다",
-    likeCount: 10,
-  },
-];
-
 function App() {
   const [isMatchMedia, setIsMatchMedia] = useState(false);
   const [styleMatchMedia, setStyleMatchMedia] = useState(false);
