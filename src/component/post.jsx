@@ -12,7 +12,9 @@ function Post({ postId, title, date, like, refreshPosts }) {
     if (isLikeClicked) return;
     // 초기값이 false니깐 처음 한번에는 실행되고 그 다음부터는 true로 만들기 떄문에 다시는 이 이상 실행이 되지 않겠죠.
     setIsLikeClicked(true);
-    await axios.get(`/post/like/add/${postId}`);
+    await axios.get(
+      `https://pcs-daejeon.herokuapp.com/post/like/add/${postId}`
+    );
     refreshPosts();
     // setLikeLoading(false);
     // 이 API가 좋아요 갯수 늘리는 API에요

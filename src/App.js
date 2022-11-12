@@ -18,7 +18,7 @@ function App() {
   const [writeLoading, setWriteLoading] = useState(true);
 
   const getPostList = async () => {
-    const { data } = await axios.get("/posts");
+    const { data } = await axios.get("https://pcs-daejeon.herokuapp.com/posts");
     setData(data.data.postList);
     setPostLoading(false);
     setWriteLoading(false);
@@ -27,7 +27,7 @@ function App() {
   const writePost = async (e) => {
     e.preventDefault();
     setWriteLoading(true);
-    await axios.post("/post/write", {
+    await axios.post("https://pcs-daejeon.herokuapp.com/post/write", {
       description,
     });
     console.log(description);
