@@ -19,7 +19,7 @@ function App() {
 
   const getPostList = async () => {
     const { data } = await axios.get("/posts");
-    setData(data.data);
+    setData(data.data.postList);
     setPostLoading(false);
     setWriteLoading(false);
   };
@@ -34,8 +34,7 @@ function App() {
     setPostLoading(true);
     getPostList();
     setDescription("");
-    setwriteModal(false);
-    console.log(writeModal);
+    writeModal(false);
   };
 
   const onClickModal = () => {
@@ -83,7 +82,6 @@ function App() {
             <form onSubmit={writePost}>
               <div className="popUp-div">
                 <h1>글 작성</h1>
-                {/* <p>장송하님</p> */}
               </div>
               <textarea
                 name=""
@@ -137,7 +135,6 @@ function App() {
           <form onSubmit={writePost}>
             <div className="popUp-div">
               <h1>글 작성</h1>
-              {/* <p>장송하님</p> */}
             </div>
             <textarea
               name=""
@@ -148,12 +145,6 @@ function App() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
-            {/* <div className="popUp-div">
-            <input type="radio" name="check" id="anon" />
-            <label htmlFor="anon">익명</label>
-            <input type="radio" name="check" id="rlNm" />
-            <label htmlFor="rlNm">본명</label>
-          </div> */}
             <div className="popUp-div buttons">
               <input type="button" value="취소" className="cancellation" />
               <input type="submit" value="게시" className="posting" />
