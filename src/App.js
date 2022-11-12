@@ -6,10 +6,12 @@ import "./App.css";
 import Post from "./component/post";
 import Alarm from "./component/alarm";
 import Loading from "./component/loading";
+// import userEvent from "@testing-library/user-event";
 
 function App() {
   const [isMatchMedia, setIsMatchMedia] = useState(false);
   const [styleMatchMedia, setStyleMatchMedia] = useState(false);
+  const [writeModal, setwriteModal] = useState(false);
   const [data, setData] = useState([]);
   const [description, setDescription] = useState("");
   const [postLoading, setPostLoading] = useState(true);
@@ -32,9 +34,22 @@ function App() {
     setPostLoading(true);
     getPostList();
     setDescription("");
+    setwriteModal(false);
+    console.log(writeModal);
+  };
+
+  const onClickModal = () => {
+    setwriteModal(!writeModal);
   };
 
   useEffect(() => {
+    if (window.innerWidth < "1600") {
+      setIsMatchMedia(true);
+      if (window.matchMedia("(max-width: 930px)").matches) {
+        setStyleMatchMedia(true);
+      } else setStyleMatchMedia(false);
+    } else setIsMatchMedia(false);
+
     const listener = window.addEventListener("resize", () => {
       if (window.matchMedia("(max-width: 1600px)").matches) {
         setIsMatchMedia(true);
@@ -52,7 +67,53 @@ function App() {
   return (
     <>
       <div
+        className="bgModal"
+        style={writeModal ? { display: "block" } : { display: "none" }}
+      >
+        <div className=" wh-Modal">
+          <button
+            id="closeBtn"
+            className="close"
+            onClick={onClickModal}
+            style={writeModal ? { display: "block" } : { display: "none" }}
+          ></button>
+          {writeLoading ? (
+            <Loading />
+          ) : (
+            <form onSubmit={writePost}>
+              <div className="popUp-div">
+                <h1>글 작성</h1>
+                {/* <p>장송하님</p> */}
+              </div>
+              <textarea
+                name=""
+                id=""
+                cols="30"
+                rows="10"
+                placeholder="작성할 글을 입력해주세요."
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              ></textarea>
+              <div className="popUp-div buttons">
+                <input
+                  type="button"
+                  value="취소"
+                  className="cancellation"
+                  onClick={onClickModal}
+                  style={
+                    writeModal ? { display: "block" } : { display: "none" }
+                  }
+                />
+                <input type="submit" value="게시" className="posting" />
+              </div>
+            </form>
+          )}
+        </div>
+      </div>
+
+      <div
         className="popUpIcon"
+        onClick={onClickModal}
         style={
           isMatchMedia
             ? { transform: "translateX(0%)" }
@@ -61,6 +122,7 @@ function App() {
       >
         +
       </div>
+
       <div
         className="popUp"
         style={
@@ -75,7 +137,7 @@ function App() {
           <form onSubmit={writePost}>
             <div className="popUp-div">
               <h1>글 작성</h1>
-              <p>장송하님</p>
+              {/* <p>장송하님</p> */}
             </div>
             <textarea
               name=""

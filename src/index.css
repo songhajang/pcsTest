@@ -52,11 +52,31 @@ body::after {
   min-height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 99;
+  display: none;
 }
 .wh-Modal {
-  max-width: 300px;
-  background-color: white;
-  margin: 0 auto;
+  margin: 50px auto;
+  transition: all 0.5s;
+  max-width: 380px;
+  /* height: 500px; */
+  background-color: #e9efff;
+
+  border-radius: 10px;
+  position: relative;
+}
+.wh-Modal #closeBtn {
+  display: block;
+  position: absolute;
+  right: 10px;
+  margin-top: 10px;
+}
+.wh-Modal form,
+.wh-Modal > div {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  padding: 50px 0;
 }
 /* 팝업 미니 아이콘 */
 .popUpIcon {
@@ -72,6 +92,7 @@ body::after {
   font-size: 30px;
   color: white;
   transition: all 1s;
+  cursor: pointer;
 }
 /* 팝업 */
 .popUp {
@@ -103,7 +124,7 @@ body::after {
   line-height: 30rem;
   border-radius: 10px;
 } */
-.popUp .popUp-div {
+.popUp-div {
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -116,10 +137,10 @@ textarea {
   border-radius: 10px;
   resize: none;
 }
-.popUp .popUp-div h1 {
+.popUp-div h1 {
   color: #3b53a3;
 }
-.popUp .popUp-div p {
+.popUp-div p {
   margin-left: 60px;
   color: #a4a4a4;
 }
@@ -135,7 +156,7 @@ textarea {
   color: #3b53a3;
   padding-right: 5px;
 }
-.popUp div.buttons input {
+div.buttons input {
   border: none;
   box-sizing: border-box;
   padding: 5px 10px;
@@ -143,10 +164,10 @@ textarea {
   font-size: 13px;
   color: white;
 }
-.popUp div.buttons .cancellation {
+div.buttons .cancellation {
   background-color: #4f4f4f;
 }
-.popUp div.buttons .posting {
+div.buttons .posting {
   background-color: blue;
 }
 /* 세션 공통  */
@@ -188,7 +209,7 @@ section {
   justify-content: space-between;
   align-items: center;
 }
-.alarm div button {
+.close {
   width: 30px;
   height: 30px;
   border: none;
@@ -199,7 +220,7 @@ section {
   display: flex;
   align-items: center;
 }
-.alarm div > span .alarm-icon {
+.alarm-icon {
   width: 30px;
   height: 30px;
   background: url(./img/alarm.png) no-repeat center;
