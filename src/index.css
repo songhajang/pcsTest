@@ -39,6 +39,12 @@ body::after {
   background: url(./img/bg2.png) no-repeat;
   background-size: 100%;
 }
+/* loading 창 */
+.lodaing {
+  text-align: center;
+  max-width: 300px;
+  margin: 50px auto;
+}
 /* 모달창  */
 .bgModal {
   position: absolute;
@@ -72,7 +78,6 @@ body::after {
   transition: all 0.5s;
   max-width: 380px;
   height: 500px;
-  position: relative;
   right: 40px;
   top: 10%;
   background-color: #e9efff;
@@ -98,7 +103,7 @@ body::after {
   line-height: 30rem;
   border-radius: 10px;
 } */
-.popUp div {
+.popUp .popUp-div {
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -111,26 +116,26 @@ textarea {
   border-radius: 10px;
   resize: none;
 }
-.popUp div h1 {
+.popUp .popUp-div h1 {
   color: #3b53a3;
 }
-.popUp div p {
+.popUp .popUp-div p {
   margin-left: 60px;
   color: #a4a4a4;
 }
-input[type="radio"] {
+.popUp-div input[type="radio"] {
   margin: 5px;
   accent-color: #afb4db;
   background-color: #7895e1;
 }
-input[type="radio"]:checked + label {
+.popUp-div input[type="radio"]:checked + label {
   color: #afb4db;
 }
-label {
+.popUp-div label {
   color: #3b53a3;
   padding-right: 5px;
 }
-input[type="button"] {
+.popUp div.buttons input {
   border: none;
   box-sizing: border-box;
   padding: 5px 10px;
@@ -138,10 +143,10 @@ input[type="button"] {
   font-size: 13px;
   color: white;
 }
-.popUp input[type="button"]:nth-child(1) {
+.popUp div.buttons .cancellation {
   background-color: #4f4f4f;
 }
-.popUp input[type="button"]:nth-child(2) {
+.popUp div.buttons .posting {
   background-color: blue;
 }
 /* 세션 공통  */
@@ -204,12 +209,12 @@ section {
   padding-left: 30px;
 }
 /* 포토 */
-.post {
+.posts {
   display: flex;
   flex-wrap: wrap;
   padding-left: 15px;
 }
-.post > div {
+.posts .post {
   width: 280px;
   background-color: white;
   border-radius: 10px;
@@ -217,18 +222,18 @@ section {
   padding: 20px;
   margin: 15px;
 }
-.post div > p {
+.posts .post > p {
   font-size: 13px;
   color: #898888;
 }
-.post div > h1 {
+.posts .post > h1 {
   font-size: 20px;
   margin: 20px 0;
   position: relative;
   padding-left: 30px;
 }
 /* 동그라미 */
-.post div > h1::before {
+.posts .post > h1::before {
   position: absolute;
   left: 0;
   top: 5px;
@@ -238,11 +243,11 @@ section {
   border-radius: 50%;
   background-color: #cef2ce;
 }
-.post div > div {
+.posts .post > div {
   display: flex;
   justify-content: flex-end;
 }
-.post div > div button {
+.posts .post > div button {
   font-size: 13px;
   margin-left: 10px;
   border: none;
@@ -251,11 +256,11 @@ section {
   display: flex;
   align-items: center;
 }
-.post div > div button svg {
+.posts .post > div button svg {
   max-width: 15px;
   margin-right: 5px;
 }
-.post div > div button:nth-child(1):hover {
+.posts .post > div button:nth-child(1):hover {
   color: blue;
 }
 /* 페이지 버튼 */

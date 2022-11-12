@@ -1,9 +1,11 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
+// import Loading from "./loading";
 
 function Post({ postId, title, date, like, refreshPosts }) {
   const [isLikeClicked, setIsLikeClicked] = useState(false);
+  // const [likeLoading, setLikeLoading] = useState(true);
 
   const addLike = async () => {
     // 이 코드의 역할은 한번 클릭되면 좋아요 갯수 늘리는 호출을 하지 않기 위해 return 하는 거에요.
@@ -12,11 +14,12 @@ function Post({ postId, title, date, like, refreshPosts }) {
     setIsLikeClicked(true);
     await axios.get(`/post/like/add/${postId}`);
     refreshPosts();
+    // setLikeLoading(false);
     // 이 API가 좋아요 갯수 늘리는 API에요
   };
 
   return (
-    <div>
+    <div className="post">
       <p>{date}</p>
       <h1>{title}</h1>
       <div>
@@ -39,7 +42,6 @@ function Post({ postId, title, date, like, refreshPosts }) {
           신고
         </button>
         <button
-          // 이렇게 버튼을 눌렀을 때 좋아요 갯수 늘리는 API 호출하는 함수도 addLike를 실행합니다
           onClick={addLike}
           style={isLikeClicked ? { color: "red" } : { color: "black" }}
         >
