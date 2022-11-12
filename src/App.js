@@ -32,9 +32,9 @@ function App() {
     });
     console.log(description);
     setPostLoading(true);
+    setwriteModal(false);
     getPostList();
     setDescription("");
-    writeModal(false);
   };
 
   const onClickModal = () => {
