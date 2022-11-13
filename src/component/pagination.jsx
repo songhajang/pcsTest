@@ -3,8 +3,8 @@ import "./Paging.css";
 import Pagination from "react-js-pagination";
 
 const Paging = ({ page, count, setPage }) => {
-  console.log("page:" + page);
-  console.log("count:" + count);
+  //   console.log("page:" + page);
+  //   console.log("count:" + count);
   return (
     <Pagination
       activePage={page}

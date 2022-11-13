@@ -32,7 +32,7 @@ function App() {
     await axios.post("https://pcs-daejeon.herokuapp.com/post/write", {
       description,
     });
-    console.log(description);
+    // console.log(description);
     setPostLoading(true);
     setwriteModal(false);
     getPostList();

@@ -4,14 +4,18 @@ import React from "react";
 // import Loading from "./loading";
 
 function Post({ data, page }) {
-  console.log(data);
+  // console.log(data);
   let test = data.filter(
     (data, index) => index >= (page - 1) * 15 && index < page * 15
   );
   console.log(test, page * 15);
   return test.map((data) => (
     <div className="post" key={data.postId} id={data.postId}>
-      <p>{data.created.split("T")[0]}</p>
+      <p>
+        {data.created.split("T")[0]}
+        <span></span>
+      </p>
+
       <h1>{data.description}</h1>
     </div>
   ));
