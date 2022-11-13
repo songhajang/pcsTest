@@ -6,7 +6,7 @@ import "./App.css";
 import Post from "./component/post";
 import Alarm from "./component/alarm";
 import Loading from "./component/loading";
-// import userEvent from "@testing-library/user-event";
+import Paging from "./component/pagination";
 
 function App() {
   const [isMatchMedia, setIsMatchMedia] = useState(false);
@@ -16,10 +16,12 @@ function App() {
   const [description, setDescription] = useState("");
   const [postLoading, setPostLoading] = useState(true);
   const [writeLoading, setWriteLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const getPostList = async () => {
     const { data } = await axios.get("https://pcs-daejeon.herokuapp.com/posts");
-    setData(data.data.postList);
+    setData(data.data);
+    console.log(data);
     setPostLoading(false);
     setWriteLoading(false);
   };
@@ -44,7 +46,7 @@ function App() {
   useEffect(() => {
     if (window.innerWidth < "1600") {
       setIsMatchMedia(true);
-      if (window.matchMedia("(max-width: 930px)").matches) {
+      if (window.matchMedia("(max-width: 944px)").matches) {
         setStyleMatchMedia(true);
       } else setStyleMatchMedia(false);
     } else setIsMatchMedia(false);
@@ -52,7 +54,7 @@ function App() {
     const listener = window.addEventListener("resize", () => {
       if (window.matchMedia("(max-width: 1600px)").matches) {
         setIsMatchMedia(true);
-        if (window.matchMedia("(max-width: 930px)").matches) {
+        if (window.matchMedia("(max-width: 944px)").matches) {
           setStyleMatchMedia(true);
         } else setStyleMatchMedia(false);
       } else setIsMatchMedia(false);
@@ -173,24 +175,15 @@ function App() {
         {postLoading ? (
           <Loading />
         ) : (
-          data.map((data) => (
-            <Post
-              key={data.postId}
-              postId={data.postId}
-              title={data.description}
-              date={data.created.split("T")[0]}
-              like={data.liked}
-              refreshPosts={getPostList}
-            />
-          ))
+          <Post data={data.postList} page={currentPage} />
         )}
       </section>
       <section className="pages">
-        <button>&#60;</button>
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>&#62;</button>
+        <Paging
+          count={data.totalPost}
+          page={currentPage}
+          setPage={setCurrentPage}
+        />
       </section>
       <section className="footer">
         <img src={footerLogo} alt="로고" />
