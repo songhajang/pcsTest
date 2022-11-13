@@ -35,12 +35,10 @@ function App() {
     e.preventDefault();
     const writeTitle = e.target[0].value.length;
     if (writeTitle >= 5 && writeTitle <= 100) {
-      // alert("작성 글은 5자 이상 100자 이하로 작성해주세요.");
       setWriteLoading(true);
-      // await axios.post("https://pcs-daejeon.herokuapp.com/post/write", {
-      //   description,
-      // });
-      // console.log(description);
+      await axios.post("https://pcs-daejeon.herokuapp.com/post/write", {
+        description,
+      });
       setPostLoading(true);
       setwriteModal(false);
       pagePostList();
