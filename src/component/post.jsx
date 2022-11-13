@@ -1,10 +1,6 @@
 import React from "react";
-// import { useState } from "react";
-// import axios from "axios";
-// import Loading from "./loading";
 
-function Post({ data, page }) {
-  // console.log(data);
+function Post({ data }) {
   return data.map((data) => (
     <div className="post" key={data.postId} id={data.postId}>
       <p>

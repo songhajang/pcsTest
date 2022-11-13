@@ -21,28 +21,34 @@ function App() {
   const pagePostList = async (page) => {
     setCurrentPage(page);
     const pages = page - 1;
-    console.log(pages);
+    // console.log(pages);
     const { data } = await axios.get(
       `https://pcs-daejeon.herokuapp.com/posts/?page=${pages}`
     );
     setData(data.data);
-    console.log(data);
+    // console.log(data);
     setPostLoading(false);
     setWriteLoading(false);
   };
 
   const writePost = async (e) => {
     e.preventDefault();
-    setWriteLoading(true);
-    await axios.post("https://pcs-daejeon.herokuapp.com/post/write", {
-      description,
-    });
-    console.log(description);
-    setPostLoading(true);
-    setwriteModal(false);
-    // getPostList();
-    pagePostList();
-    setDescription("");
+    const writeTitle = e.target[0].value.length;
+    if (writeTitle >= 5 && writeTitle <= 100) {
+      // alert("작성 글은 5자 이상 100자 이하로 작성해주세요.");
+      setWriteLoading(true);
+      // await axios.post("https://pcs-daejeon.herokuapp.com/post/write", {
+      //   description,
+      // });
+      // console.log(description);
+      setPostLoading(true);
+      setwriteModal(false);
+      pagePostList();
+      setDescription("");
+    } else {
+      alert("작성글은 5자 이상 100자 이하로 작성해 주세요.");
+      setDescription("");
+    }
   };
 
   const onClickModal = () => {
@@ -70,7 +76,7 @@ function App() {
         "https://pcs-daejeon.herokuapp.com/posts/"
       );
       setData(data.data);
-      console.log(data);
+      // console.log(data);
       setPostLoading(false);
       setWriteLoading(false);
     };
