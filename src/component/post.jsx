@@ -5,11 +5,7 @@ import React from "react";
 
 function Post({ data, page }) {
   // console.log(data);
-  let test = data.filter(
-    (data, index) => index >= (page - 1) * 15 && index < page * 15
-  );
-  console.log(test, page * 15);
-  return test.map((data) => (
+  return data.map((data) => (
     <div className="post" key={data.postId} id={data.postId}>
       <p>
         {data.created.split("T")[0]}

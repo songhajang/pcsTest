@@ -18,8 +18,13 @@ function App() {
   const [writeLoading, setWriteLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const getPostList = async () => {
-    const { data } = await axios.get("https://pcs-daejeon.herokuapp.com/posts");
+  const pagePostList = async (page) => {
+    setCurrentPage(page);
+    const pages = page - 1;
+    console.log(pages);
+    const { data } = await axios.get(
+      `https://pcs-daejeon.herokuapp.com/posts/?page=${pages}`
+    );
     setData(data.data);
     console.log(data);
     setPostLoading(false);
@@ -32,10 +37,11 @@ function App() {
     await axios.post("https://pcs-daejeon.herokuapp.com/post/write", {
       description,
     });
-    // console.log(description);
+    console.log(description);
     setPostLoading(true);
     setwriteModal(false);
-    getPostList();
+    // getPostList();
+    pagePostList();
     setDescription("");
   };
 
@@ -59,6 +65,15 @@ function App() {
         } else setStyleMatchMedia(false);
       } else setIsMatchMedia(false);
     });
+    const getPostList = async () => {
+      const { data } = await axios.get(
+        "https://pcs-daejeon.herokuapp.com/posts/"
+      );
+      setData(data.data);
+      console.log(data);
+      setPostLoading(false);
+      setWriteLoading(false);
+    };
 
     getPostList();
 
@@ -182,7 +197,7 @@ function App() {
         <Paging
           count={data.totalPost}
           page={currentPage}
-          setPage={setCurrentPage}
+          setPage={pagePostList}
         />
       </section>
       <section className="footer">
