@@ -16,16 +16,17 @@ function Home() {
   const [postLoading, setPostLoading] = useState(true);
   const [writeLoading, setWriteLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const code = process.env.REACT_APP_BACKEND_URL;
 
   const pagePostList = async (page) => {
     setCurrentPage(page);
     const pages = page - 1;
     // console.log(pages);
     const { data } = await axios.get(
-      `https://pcs-daejeon.herokuapp.com/posts/?page=${pages}`
+      `${code}/posts/?page=${pages}`
     );
     setData(data.data);
-    // console.log(data);
+    console.log(data);
     setPostLoading(false);
     setWriteLoading(false);
   };
@@ -35,7 +36,7 @@ function Home() {
     const writeTitle = e.target[0].value.length;
     if (writeTitle >= 5 && writeTitle <= 100) {
       setWriteLoading(true);
-      await axios.post("https://pcs-daejeon.herokuapp.com/post/write", {
+      await axios.post(`${code}/post/write`, {
         description,
       });
       setPostLoading(true);
@@ -70,7 +71,7 @@ function Home() {
     });
     const getPostList = async () => {
       const { data } = await axios.get(
-        "https://pcs-daejeon.herokuapp.com/posts/"
+        `${code}/posts/`
       );
       setData(data.data);
       setPostLoading(false);
