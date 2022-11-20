@@ -27,7 +27,7 @@ function Home() {
     try {
       const { data } = await axios.get(
         `${code}/posts/?page=${pages}`
-      );
+        , {withCredentials:true});
       setData(data.data);
       setPostLoading(false);
       setWriteLoading(false);
@@ -45,9 +45,9 @@ function Home() {
       try {
         await axios.post(`${code}/post/write`, {
           description,
-        })
+        }, {withCredentials:true})
       } catch(err) {
-        if (err.response.status == 401) {
+        if (err?.response?.status == 401) {
           alert("로그인 후 이용해주십시오.")
           window.location.href="/login"
         } else {
