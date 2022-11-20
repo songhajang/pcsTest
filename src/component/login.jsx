@@ -4,7 +4,7 @@ import loading from "../img/loading.gif";
 import logo from "../img/logo.png";
 import "./css/login.css"
 
-function Post() {
+function Login() {
   const [loginId, setLoginId] = useState("")
   const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -17,14 +17,14 @@ function Post() {
     setIsLoading(true)
     
     try {
-      const res = await axios.post(`${url}/login`, form)
+      const res = await axios.post(`${url}/login`, form, {withCredentials:true})
       const resData = res?.data
 
       if (!resData) {
         throw new Error("resData is null")
       }
       
-      window.location.href="/"
+      // window.location.href="/"
     } catch(err) {
       alert("로그인중 문제가 발생하였습니다. 관리자에게 문의해주세요.")
     } finally {
@@ -37,7 +37,7 @@ function Post() {
   }
 
   return (
-    <div class="login_card">
+    <div className="login_card">
       <img src={logo} alt="컴과고로고" width='25%' onClick={locationToHome} />
       <div id="loginArea" >
         <input type="text" id="loginId" name="loginId" placeholder="login" 
@@ -58,4 +58,4 @@ function Post() {
     </div>
   )
 }
-export default Post;
+export default Login;
