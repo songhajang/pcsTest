@@ -49,6 +49,7 @@ function Home() {
       } catch(err) {
         if (err.response.status == 401) {
           alert("로그인 후 이용해주십시오.")
+          window.location.href="/login"
         } else {
           alert("글 작성중 원인 모를 오류 발생! 관리자에게 문의하세요.")
         }
