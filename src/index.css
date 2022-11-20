@@ -40,10 +40,13 @@ body::after {
   background-size: 100%;
 }
 /* loading 창 */
-.lodaing {
+.loading {
   text-align: center;
-  max-width: 300px;
+  max-width: 247px;
   margin: 50px auto;
+}
+.loading > p {
+  font-size: 10pt;
 }
 /* 모달창  */
 .bgModal {
