@@ -26,6 +26,17 @@ function Login() {
       
       // window.location.href="/"
     } catch(err) {
+      
+      if (err?.response?.data.message == "account is pending") {
+        alert("계정이 승인 대기 상태입니다.")
+      }
+      if (err?.response?.data.message == "account is disabled") {
+        alert("계정이 정지당하였습니다.")
+      }
+      if (err?.response?.data.message == "id or password not exist") {
+        alert("아이디나 패스워드가 틀렸습니다.")
+      }
+      
       alert("로그인중 문제가 발생하였습니다. 관리자에게 문의해주세요.")
     } finally {
       setIsLoading(false)
