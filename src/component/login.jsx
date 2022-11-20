@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import loading from "../img/loading.gif";
 import logo from "../img/logo.png";
-import "./login.css"
+import "./css/login.css"
 
 function Post() {
   const [loginId, setLoginId] = useState("")
@@ -51,7 +51,7 @@ function Post() {
       </div>
       <br />
       {isLoading ? ( 
-          <img src={loading} alt="로딩중중" width="10%" id="loadingImg" />
+          <img src={loading} alt="로딩중" width="10%" id="loadingImg" />
       ) : (
         <button id="loginBtn" onClick={login}>로그인</button>
       )}

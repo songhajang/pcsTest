@@ -1,5 +1,5 @@
 // import React, { useState } from "react";
-import "./Paging.css";
+import "./css/Paging.css";
 import Pagination from "react-js-pagination";
 
 const Paging = ({ page, count, setPage }) => {
