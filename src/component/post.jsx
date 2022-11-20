@@ -1,6 +1,14 @@
 import React from "react";
 
 function Post({ data }) {
+  if (!data) {
+    return (
+      <div>
+        <p>Not Found Post</p>
+      </div>
+    )
+  }
+  
   return data.map((data) => (
     <div className="post" key={data.postId} id={data.postId}>
       <p>
