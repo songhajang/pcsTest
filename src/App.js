@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Home from "./component/home";
 import Login from "./component/login";
+import SignUp from "./component/signUp";
 
 function App() {
   return (
@@ -10,11 +11,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route
         path="/join"
-        element={
-          <section>
-            <h1>회원가입 페이지</h1>
-          </section>
-        }
+        element={<SignUp />}
       />
     </Routes>
   );

@@ -1,0 +1,38 @@
+.signUp_card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 600px;
+    width: 374px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+}
+.signUp_card > img {
+    margin: 40px auto;
+    margin-bottom: 0;
+    cursor: pointer;
+}
+
+#signUpArea {
+    margin: auto;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+}
+
+.signUpInput {
+    border: 0;
+    border-bottom: 1px solid rgb(179, 179, 179);    
+}
+
+#authRadio {
+    display: flex;
+    justify-content: space-between;
+}
+
+#authRadio > span > input {
+    margin: 5px;
+}
