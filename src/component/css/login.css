@@ -1,57 +1,60 @@
 .login_card {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 550px;
-    width: 374px;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    border-radius: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* height: 550px; */
+  min-width: 500px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  padding: 50px 0;
 }
-.login_card > img {
-    margin: 40px auto;
-    margin-bottom: 0;
-    cursor: pointer;
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: #3b53a3;
 }
 
 #loginArea {
-    margin: auto;
-    width: 374px;
-    display: flex;
-    flex-direction: column;
-
+  margin: auto;
+  width: 374px;
+  display: flex;
+  flex-direction: column;
 }
 #loginArea > a {
-    margin: 0 auto;
-    font-size: 8.5pt;
+  margin: 0 auto;
+  font-size: 13px;
 }
 
-#loginId, #password {
-    border: 0;
-    border-bottom: 1px solid rgb(177, 177, 177);
-    margin: 5px auto;
-    width: 300px;
-    height: 50px;
-    font-size: 15pt;
+#loginId,
+#password {
+  border: 0;
+  border-bottom: 1px solid rgb(223, 223, 223);
+  margin: 5px auto;
+  width: 300px;
+  height: 50px;
+  font-size: 13pt;
 }
 
 #loginBtn {
-    margin: 0 auto;
-    width: 304px;
-    height: 40px;
-    background-color: #7895e1;
-    color: white;
-    border: 0;
-    border-radius: 50px;
-    margin-bottom: 40px;
+  margin: 0 auto;
+  width: 304px;
+  height: 40px;
+  background-color: #7895e1;
+  color: white;
+  border: 0;
+  border-radius: 50px;
+  margin-bottom: 40px;
 }
 #adminLink {
-    color: white;
+  color: white;
 }
 
 #loadingImg {
-    margin: 0 auto;
-    margin-bottom: 40px;
+  margin: 0 auto;
+  margin-bottom: 40px;
 }
