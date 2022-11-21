@@ -6,6 +6,7 @@ import Post from "./post";
 import Alarm from "./alarm";
 import Loading from "./loading";
 import Paging from "./pagination";
+import Write from "./write";
 
 function Home() {
   const [isMatchMedia, setIsMatchMedia] = useState(false);
@@ -20,20 +21,20 @@ function Home() {
 
   const pagePostList = async (page) => {
     if (page === undefined) {
-      page = 1
+      page = 1;
     }
     setCurrentPage(page);
     const pages = page - 1;
     try {
-      const { data } = await axios.get(
-        `${code}/posts/?page=${pages}`
-        , {withCredentials:true});
+      const { data } = await axios.get(`${code}/posts/?page=${pages}`, {
+        withCredentials: true,
+      });
       setData(data.data);
       setPostLoading(false);
       setWriteLoading(false);
-    } catch(err) {
-      console.log(err)
-      alert("글을 가져오는 중 원인 모를 오류 발생! 관리자에게 문의하세요.")
+    } catch (err) {
+      console.log(err);
+      alert("글을 가져오는 중 원인 모를 오류 발생! 관리자에게 문의하세요.");
     }
   };
 
@@ -43,22 +44,25 @@ function Home() {
     if (writeTitle >= 5 && writeTitle <= 100) {
       setWriteLoading(true);
       try {
-        await axios.post(`${code}/post/write`, {
-          description,
-        }, {withCredentials:true})
-      } catch(err) {
+        await axios.post(
+          `${code}/post/write`,
+          {
+            description,
+          },
+          { withCredentials: true }
+        );
+      } catch (err) {
         if (err?.response?.status == 401) {
-          alert("로그인 후 이용해주십시오.")
-          window.location.href="/login"
-          return
-        } 
+          alert("로그인 후 이용해주십시오.");
+          window.location.href = "/login";
+          return;
+        }
         if (err?.response?.data == "bad words") {
-          alert("욕설이 감지됐습니다.")
-          return
-        } 
+          alert("욕설이 감지됐습니다.");
+          return;
+        }
 
-        
-        alert("글 작성중 원인 모를 오류 발생! 관리자에게 문의하세요.")
+        alert("글 작성중 원인 모를 오류 발생! 관리자에게 문의하세요.");
       }
 
       setPostLoading(true);
@@ -92,12 +96,15 @@ function Home() {
       } else setIsMatchMedia(false);
     });
     const getPostList = async () => {
-      const { data } = await axios.get(
-        `${code}/posts/`
-      );
-      setData(data.data);
-      setPostLoading(false);
-      setWriteLoading(false);
+      try {
+        const { data } = await axios.get(`${code}/posts/`);
+        setData(data.data);
+        setPostLoading(false);
+        setWriteLoading(false);
+      } catch {
+        setPostLoading(false);
+        setWriteLoading(false);
+      }
     };
 
     getPostList();
@@ -121,32 +128,13 @@ function Home() {
           {writeLoading ? (
             <Loading />
           ) : (
-            <form onSubmit={writePost}>
-              <div className="popUp-div">
-                <h1>글 작성</h1>
-              </div>
-              <textarea
-                name=""
-                id=""
-                cols="30"
-                rows="10"
-                placeholder="작성할 글을 입력해주세요."
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              ></textarea>
-              <div className="popUp-div buttons">
-                <input
-                  type="button"
-                  value="취소"
-                  className="cancellation"
-                  onClick={onClickModal}
-                  style={
-                    writeModal ? { display: "block" } : { display: "none" }
-                  }
-                />
-                <input type="submit" value="게시" className="posting" />
-              </div>
-            </form>
+            <Write
+              setDescription={setDescription}
+              writePost={writePost}
+              onClickModal={onClickModal}
+              writeModal={writeModal}
+              description={description}
+            />
           )}
         </div>
       </div>
@@ -174,24 +162,12 @@ function Home() {
         {writeLoading ? (
           <Loading />
         ) : (
-          <form onSubmit={writePost}>
-            <div className="popUp-div">
-              <h1>글 작성</h1>
-            </div>
-            <textarea
-              name=""
-              id=""
-              cols="30"
-              rows="10"
-              placeholder="작성할 글을 입력해주세요."
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            ></textarea>
-            <div className="popUp-div buttons">
-              <input type="button" value="취소" className="cancellation" />
-              <input type="submit" value="게시" className="posting" />
-            </div>
-          </form>
+          <Write
+            setDescription={setDescription}
+            writePost={writePost}
+            writeModal={writeModal}
+            description={description}
+          />
         )}
       </div>
       <section className="main">
@@ -215,7 +191,7 @@ function Home() {
         {postLoading ? (
           <Loading />
         ) : (
-          <Post data={data.postList} page={currentPage} />
+          <Post data={data.postList} page={currentPage} OnClik={pagePostList} />
         )}
       </section>
       <section className="pages">

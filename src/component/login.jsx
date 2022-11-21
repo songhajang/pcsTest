@@ -26,7 +26,7 @@ function Login() {
         throw new Error("resData is null");
       }
 
-      // window.location.href="/"
+      window.location.href = "/";
     } catch (err) {
       if (err?.response?.data.message == "account is pending") {
         alert("계정이 승인 대기 상태입니다.");

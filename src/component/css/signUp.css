@@ -10,6 +10,7 @@
   flex-direction: column;
   border-radius: 10px;
   padding: 50px 0;
+  z-index: 999;
 }
 .signUp_card .logo {
   display: flex;
