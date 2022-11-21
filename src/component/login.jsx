@@ -25,6 +25,18 @@ function Login() {
       if (!resData) {
         throw new Error("resData is null");
       }
+      if (resData.message == "account is pending") {
+        alert("계정이 승인 대기 상태입니다.");
+        return;
+      }
+      if (resData.message == "account is disabled") {
+        alert("계정이 정지당하였습니다.");
+        return;
+      }
+      if (resData.message == "id or password not exist") {
+        alert("아이디나 패스워드가 틀렸습니다.");
+        return;
+      }
 
       window.location.href = "/";
     } catch (err) {
