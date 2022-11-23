@@ -108,10 +108,8 @@ function Home() {
     };
 
     getPostList();
-
     return () => window.removeEventListener("resize", listener);
   }, []);
-
   return (
     <>
       <div
@@ -191,7 +189,13 @@ function Home() {
         {postLoading ? (
           <Loading />
         ) : (
-          <Post data={data.postList} page={currentPage} OnClik={pagePostList} />
+          data.postList.map((data) => {
+            return (
+              <div key={data.postId}>
+                <Post data={data} code={code} />
+              </div>
+            );
+          })
         )}
       </section>
       <section className="pages">
