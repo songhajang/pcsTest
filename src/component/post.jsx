@@ -2,28 +2,43 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 
-function Post({ data, code }) {
-  const [isLikeClicked, setIsLikeClicked] = useState(false);
-  // const [postId, setPostId] = useState(0);
+function Post({ data, code, liked }) {
+  const [isLikeClicked, setIsLikeClicked] = useState(liked ? true : false);
+  const [likedCount, setLikedCount] = useState(data.likedCount)
+  const [isWorking, setIsWorking] = useState(false)
 
-  // const addLike = async (e) => {
-  //   if (isLikeClicked) return;
-  //   setPostId(e.target.value);
-  //   const test = await axios.get(`${code}/post/like/add/1`);
-  //   console.log(test);
-  // };
-
-  useEffect(() => {
-    const addLike = async () => {
-      const test = await axios.get(
+  const addLike = async () => {
+    if (isWorking) {
+      return
+    }
+    try {
+      setIsWorking(true)
+      await axios.post(
         `${code}/post/like/add/${data.postId}`,
         {},
         { withCredentials: true }
       );
-      console.log(test);
-    };
-    addLike();
-  });
+
+      if (isLikeClicked) {
+        setIsLikeClicked(false)
+        setLikedCount(likedCount - 1)
+      } else {
+        setLikedCount(likedCount + 1)
+        setIsLikeClicked(true)
+      }
+    } catch (err) {
+      const status = err?.response?.status
+      if (status == 401) {
+        alert("로그인 후 이용해주십시오.");
+        window.location.href = "/login";
+        return;
+      }
+      alert("좋아요 등록중 알 수 없는 오류가 발생하였습니다. 관리자에게 문의하세요.");
+    } finally {
+      setIsWorking(false)
+    }
+    
+  };
 
   if (!data) {
     return (
@@ -62,7 +77,7 @@ function Post({ data, code }) {
           신고
         </button>
         <button
-          // onClick={addLike}
+          onClick={addLike}
           style={isLikeClicked ? { color: "red" } : { color: "black" }}
           value={data.postId}
         >
@@ -83,7 +98,7 @@ function Post({ data, code }) {
           좋아요
         </button>
       </div>
-      <p>좋아요 {data.likedPostId}개</p>
+      <p>좋아요 {likedCount}개</p>
     </div>
   );
 }
