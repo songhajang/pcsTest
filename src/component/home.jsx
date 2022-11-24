@@ -19,22 +19,20 @@ function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const code = process.env.REACT_APP_BACKEND_URL;
 
-  const pagePostList = async (page) => {
-    if (page === undefined) {
-      page = 1;
-    }
+  const pagePostList = async (page = 1) => {
     setCurrentPage(page);
     const pages = page - 1;
     try {
-      const { data } = await axios.get(`${code}/posts/?page=${pages}`, {
+      const { data } = await axios.post(`${code}/posts/?page=${pages}`, {}, {
         withCredentials: true,
       });
       setData(data.data);
-      setPostLoading(false);
-      setWriteLoading(false);
     } catch (err) {
       console.log(err);
       alert("글을 가져오는 중 원인 모를 오류 발생! 관리자에게 문의하세요.");
+    } finally {
+      setPostLoading(false);
+      setWriteLoading(false);
     }
   };
 
@@ -44,13 +42,7 @@ function Home() {
     if (writeTitle >= 5 && writeTitle <= 100) {
       setWriteLoading(true);
       try {
-        await axios.post(
-          `${code}/post/write`,
-          {
-            description,
-          },
-          { withCredentials: true }
-        );
+        await axios.post(`${code}/post/write`, { description }, { withCredentials: true });
       } catch (err) {
         if (err?.response?.status == 401) {
           alert("로그인 후 이용해주십시오.");
@@ -61,7 +53,6 @@ function Home() {
           alert("욕설이 감지됐습니다.");
           return;
         }
-
         alert("글 작성중 원인 모를 오류 발생! 관리자에게 문의하세요.");
       }
 
@@ -95,19 +86,8 @@ function Home() {
         } else setStyleMatchMedia(false);
       } else setIsMatchMedia(false);
     });
-    const getPostList = async () => {
-      try {
-        const { data } = await axios.get(`${code}/posts/`);
-        setData(data.data);
-        setPostLoading(false);
-        setWriteLoading(false);
-      } catch {
-        setPostLoading(false);
-        setWriteLoading(false);
-      }
-    };
 
-    getPostList();
+    pagePostList();
     return () => window.removeEventListener("resize", listener);
   }, []);
   return (
@@ -192,7 +172,7 @@ function Home() {
           data.postList.map((data) => {
             return (
               <div key={data.postId}>
-                <Post data={data} code={code} />
+                <Post data={data} code={code} liked={data.likedPostId != null} />
               </div>
             );
           })
