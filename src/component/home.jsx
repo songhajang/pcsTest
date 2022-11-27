@@ -172,7 +172,7 @@ function Home() {
           data.postList.map((data) => {
             return (
               <div key={data.postId}>
-                <Post data={data} code={code} liked={data.liked} reported={data.reported} />
+                <Post data={data} code={code} liked={data.isLiked} reported={data.isReported} />
               </div>
             );
           })
