@@ -2,17 +2,18 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 
-function Post({ data, code, liked }) {
-  const [isLikeClicked, setIsLikeClicked] = useState(liked ? true : false);
+function Post({ data, code, liked, reported }) {
+  const [isLikeClicked, setIsLikeClicked] = useState(liked);
+  const [isReported, setIsReported] = useState(reported);
   const [likedCount, setLikedCount] = useState(data.likedCount)
-  const [isWorking, setIsWorking] = useState(false)
+  const [isLikeWorking, setIsLikeWorking] = useState(false)
+  const [isReportWorking, setIsReportWorking] = useState(false)
 
   const addLike = async () => {
-    if (isWorking) {
-      return
-    }
+    if (isLikeWorking) return
+    
     try {
-      setIsWorking(true)
+      setIsLikeWorking(true)
       await axios.post(
         `${code}/post/like/add/${data.postId}`,
         {},
@@ -35,10 +36,49 @@ function Post({ data, code, liked }) {
       }
       alert("좋아요 등록중 알 수 없는 오류가 발생하였습니다. 관리자에게 문의하세요.");
     } finally {
-      setIsWorking(false)
+      setIsLikeWorking(false)
     }
     
   };
+
+  const report = async () => {
+    if (isReportWorking) return
+
+    const reason = ""
+    if (!isReported) 
+      reason = prompt("신고 사유 \n\n명확한 이유 없는 신고 혹은 장난성 신고는 계정 정지 처분을 당할 수 있습니다.")
+
+    try {
+      if (!reason || reason.length < 10)
+        return alert("신고 사유는 10자 이상 적어주셔야 합니다.")
+      setIsReportWorking(true)
+
+      await axios.post(
+        `${code}/post/report/${data.postId}`,
+        { reason },
+        { withCredentials: true }
+      );
+
+      if (isReported) {
+        setIsReported(false)
+      } else {
+        setIsReported(true)
+      }
+    } catch (err) {
+      const status = err?.response?.status
+      if (status == 401) {
+        alert("로그인 후 이용해주십시오.");
+        window.location.href = "/login";
+        return;
+      }
+      alert("신고 등록중 알 수 없는 오류가 발생하였습니다. 관리자에게 문의하세요.");
+    } finally {
+      setIsReportWorking(false)
+    }
+    
+  };
+
+
 
   if (!data) {
     return (
@@ -58,7 +98,10 @@ function Post({ data, code, liked }) {
       <h1>{data.description}</h1>
 
       <div>
-        <button>
+        <button
+          onClick={report}
+          style={isReported ? { color: "red" } : { color: "black" }}
+          value={data.postId} >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
