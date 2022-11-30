@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="adminHome">
+        <div class="intro">
+            <span>계정 관리</span>
+        </div>
+        <div class="intro" onclick="location='/adminPost.html'">
+            <span>게시글 관리</span>
+        </div>
+    </div>
+
+    <style>
+        body,
+        html {
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            height: 100%;
+        }
+        
+        #adminHome {
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .intro {
+            margin: auto;
+            width: 500px;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            background-color: #aef0fc;
+            border-radius: 10%;
+            cursor: pointer;
+        }
+
+        .intro > span {
+            font-size: 40pt;
+            margin: auto;
+        }
+    </style>
+</body>
+</html>

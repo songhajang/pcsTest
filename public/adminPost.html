@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>admin page</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div id="background" class="none"></div>
+    <div id="adminPageMain">
+        <div id="filter">
+            작성자 ID: <input type="number" id="createdBy">
+            신고 횟수: <input type="number" id="reportedCount">
+            <br />
+            <br />
+            <button onclick="callRejectPost()">검색</button>
+        </div>
+
+        <table id="adminPostListArea" border="1">
+            
+
+        </table>
+        
+        <div id="reportList" class="none">
+            <table border="1">
+                
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const url = "https://daejeon-production.up.railway.app"
+        let styleElem = document.head.appendChild(document.createElement("style"));
+
+        callRejectPost()
+
+        async function callRejectPost() {
+
+            const createdBy = document.querySelector("#createdBy").value
+            const reportedCount = document.querySelector("#reportedCount").value
+
+            try {
+
+                const { data } = await axios.post(
+                    `${url}/admin/posts/reject?${createdBy ? "memberId=" + createdBy + "&" : ""}${reportedCount ? "reportCount=" + reportedCount : ""}`,
+                    {}, {withCredentials: true}
+                )
+                let listArea = document.querySelector("#adminPostListArea")
+                let html = ``
+                
+                listArea.innerHTML = `
+                <tr>
+                    <th style="width: 10%;">ID</th>
+                    <th style="width: 10%;">작성자ID</th>
+                    <th style="width: 20%;">작성일</th>
+                    <th>내용</th>
+                    <th style="width: 10%;">신고 횟수</th>
+                    <th style="width: 10%;">신고 내용 리스트</th>
+                    <th style="width: 10%;" colspan="2">승인, 거절</th>
+                    </tr>
+                    `
+                    
+                    data.data.forEach(o => {
+                        html += `
+                        <tr>
+                            <td>${o.postId}</td>
+                            <td>${o.createdBy}</td>
+                            <td>${o.created}</td>
+                            <td>${o.description}</td>
+                            <td>${o.reportedCount}번</td>
+                            <td onclick="callReportList(${o.postId})">
+                                리스트 보기
+                                </td>
+                                <td onclick="acceptPost(${o.postId})">승인</td>
+                                <td onclick="rejectPost(${o.postId})">거절</td>
+                                </tr>
+                                ` 
+                })
+                listArea.innerHTML += html
+            } catch(e) {
+                if (e.response.status == 401 || e.response.status == 403) {
+                    alert("관리자 계정으로 로그인후 이용해 주십시오.")
+                    location.href="/login"
+                    return
+                }
+                alert("게시물들을 가져오는중 알수없는 오류 발생. 개발자에게 문의하세요")
+            }
+        }
+
+        async function callReportList(postId) {
+            let listArea = document.querySelector("#reportList > table")
+            const { data } = await axios.post(`${url}/admin/reports/${postId}`, {}, {withCredentials: true})
+
+            listArea.innerHTML = `
+                <tr>
+                    <th style="width: 10%;">신고자 ID</th>
+                    <th>신고 사유</th>
+                    <th style="width: 20%;">신고 시간</th>
+                </tr>
+            `
+
+            data.data.forEach(o => {
+                listArea.innerHTML += `
+                <tr>
+                    <td>${o.reportedBy}</td>
+                    <td>${o.reason}</td>
+                    <td>${o.reportedAt}</td>
+                </tr>
+                `
+            })
+
+            document.getElementById("reportList").className = "block"
+            document.querySelector("#background").className = "block"
+        }
+        
+        async function acceptPost(postId) {
+            const { data } = await axios.post(`${url}/admin/post/accept/${postId}`, {}, {withCredentials: true})
+            callRejectPost()
+        }
+        async function rejectPost(postId) {
+            const { data } = await axios.post(`${url}/admin/post/reject/${postId}`, {}, {withCredentials: true})
+            callRejectPost()
+        }
+        
+        document.querySelector("#background").addEventListener("click", () => {
+            document.getElementById("reportList").className = "none"
+            document.querySelector("#background").className = "none"
+        })
+    </script>
+
+    <style>
+
+        html,
+        body {
+            margin: 0;
+        }
+        #adminPageMain {
+            margin: 10px;
+            margin-top: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #filter {
+            padding: 10px;
+            margin: 40px;
+        }
+        
+        #filter > input {
+            margin-right: 20px;
+        }
+        
+        #adminPostListArea {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        
+        #adminPostListArea > tbody> tr > td:nth-child(n+6) {
+            text-align: center;
+            cursor: pointer;
+        }
+
+        #reportList {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            max-height: 80vh;
+            height: 1000px;
+            padding: 40px;
+            border-radius: 9px;
+            overflow: auto;
+            background-color: aliceblue;
+        }
+        
+        #background {
+            content: "";
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .none {
+            display: none;
+        }
+
+        .block {
+            display: block;
+        }
+        </style>
+</body>
+</html>
