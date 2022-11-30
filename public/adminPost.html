@@ -31,7 +31,7 @@
     </div>
 
     <script>
-        const url = "http://localhost"
+        const url = "https://daejeon-production.up.railway.app"
         let styleElem = document.head.appendChild(document.createElement("style"));
 
         callRejectPost()
@@ -40,7 +40,7 @@
 
             const createdBy = document.querySelector("#createdBy").value
             const reportedCount = document.querySelector("#reportedCount").value
-            
+
             try {
 
                 const { data } = await axios.post(
@@ -83,6 +83,7 @@
                 if (e.response.status == 401 || e.response.status == 403) {
                     alert("관리자 계정으로 로그인후 이용해 주십시오.")
                     location.href="/login"
+                    return
                 }
                 alert("게시물들을 가져오는중 알수없는 오류 발생. 개발자에게 문의하세요")
             }
