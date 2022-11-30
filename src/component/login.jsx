@@ -93,7 +93,7 @@ function Login() {
         />
         <br />
         <a href="/join">계정이 없으신가요? 회원가입하기</a>
-        <a href="/admin" id="adminLink">
+        <a href="/adminHomePage.html" id="adminLink">
           관리자 페이지
         </a>
       </div>
