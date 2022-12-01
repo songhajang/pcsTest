@@ -17,6 +17,17 @@ function SignUp() {
   const url = process.env.REACT_APP_BACKEND_URL;
 
   async function signUp() {
+    if (!loginId || !password || !name || !birthDay || !phoneNumber || !authType || !studentNumber || !referCode)
+      return alert("모든 항목을 필수 기재 사항입니다.")
+
+    if (name.length < 2) return alert("이름은 최소 한글자 이상이어야 합니다.")
+    if (birthDay.length < 6 || birthDay.length > 6) return alert("생년월일은 6자로 이루어져야 합니다.")
+    if (phoneNumber.length < 11 || phoneNumber.length > 11) return alert("전화번호는 11자로 이루어져야 합니다,.")
+    if (studentNumber.length < 5 || studentNumber.length > 5) return alert("학번은 5자로 이루어져야 합니다.")
+    
+    if (!document.getElementById("infoAgreement").checked) 
+      return alert("개인정보 수집 및 이용 동의는 필수입니다.")
+
     setIsLoading(true);
 
     try {
@@ -39,6 +50,12 @@ function SignUp() {
       if (!resData) {
         throw new Error("resData is null");
       }
+
+      if (referCode == null) {
+        alert("회원가입에 성공하셨습니다.\n\n인스타그램(pcs-daejeon)으로 가셔서 본인인증을 해주시기 바랍니다.\n학생증, 신분증, 가족사랑카드 등 신분을 증명할 수 있는 아무 방법으로 신청하실 수 있습니다.")
+      }
+
+      alert("추천코드를 사용한 회원가입에 성공하셨습니다.\n\n추천코드를 사용할 시 서비스 즉시 이용이 가능합니다.\n추천코드를 사용하였을 시 코드 발급자가 코드 사용자의 보증인이 됩니다.\n코드 사용자에게 문제가 발생할 시 보증인에게 책임이 넘어갑니다.")
 
       window.location.href = "/login";
     } catch (err) {
@@ -168,6 +185,11 @@ function SignUp() {
           value={referCode}
           onChange={(e) => setReferCode(e.target.value)}
         />
+      </div>
+      <div id="infoAgree">
+        <a href="/infoAgreement.txt">개인정보처리방침 보러가기</a>
+        <br />
+        <input type="checkbox" id="infoAgreement" /> 개인정보 수집•이용 동의
       </div>
       {isLoading ? (
         <img src={loading} alt="로딩중" width="10%" id="loadingImg" />
