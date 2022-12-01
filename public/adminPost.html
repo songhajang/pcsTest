@@ -32,17 +32,17 @@
 
     <script>
         const url = "http://localhost"
-        let styleElem = document.head.appendChild(document.createElement("style"));
+        let isWorking = false
 
         callRejectPost()
 
         async function callRejectPost() {
-
+            if (isWorking) return
             const createdBy = document.querySelector("#createdBy").value
             const reportedCount = document.querySelector("#reportedCount").value
 
             try {
-
+                isWorking = true
                 const { data } = await axios.post(
                     `${url}/admin/posts/reject?${createdBy ? "memberId=" + createdBy + "&" : ""}${reportedCount ? "reportCount=" + reportedCount : ""}`,
                     {}, {withCredentials: true}
@@ -86,10 +86,13 @@
                     return
                 }
                 alert("게시물들을 가져오는중 알수없는 오류 발생. 개발자에게 문의하세요")
+            } finally {
+                isWorking = false
             }
         }
 
         async function callReportList(postId) {
+            if (isWorking) return
             let listArea = document.querySelector("#reportList > table")
             const { data } = await axios.post(`${url}/admin/reports/${postId}`, {}, {withCredentials: true})
 
@@ -116,7 +119,10 @@
         }
         
         async function acceptPost(postId) {
+            if (isWorking) return
+
             try {
+                isWorking = true
                 await axios.post(`${url}/admin/post/accept/${postId}`, {}, {withCredentials: true})
             } catch(e) {
                 if (e.response?.status == 401 || e.response?.status == 403) {
@@ -126,11 +132,16 @@
                 }
 
                 alert("알수없는 오류 발생. 개발자에게 문의하세요")
+            } finally {
+                isWorking = false
             }
             callRejectPost()
         }
         async function rejectPost(postId) {
+            if (isWorking) return
+
             try {
+                isWorking = true
                 await axios.post(`${url}/admin/post/reject/${postId}`, {}, {withCredentials: true})
             } catch(e) {
                 if (e.response?.status == 401 || e.response?.status == 403) {
@@ -140,6 +151,8 @@
                 }
 
                 alert("알수없는 오류 발생. 개발자에게 문의하세요")
+            } finally {
+                isWorking = false
             }
             callRejectPost()
         }
