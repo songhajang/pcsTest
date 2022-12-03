@@ -17,16 +17,21 @@ function Home() {
   const [postLoading, setPostLoading] = useState(true);
   const [writeLoading, setWriteLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLogin, setIsLogin] = useState(false);
   const code = process.env.REACT_APP_BACKEND_URL;
 
   const pagePostList = async (page = 1) => {
     setCurrentPage(page);
     const pages = page - 1;
     try {
-      const { data } = await axios.post(`${code}/posts/?page=${pages}`, {}, {
+      const res = await axios.post(`${code}/posts/?page=${pages}`, {}, {
         withCredentials: true,
       });
-      setData(data.data);
+
+      if (res.headers.islogin == 'true') {
+        setIsLogin(true)
+      }
+      setData(res.data.data);
     } catch (err) {
       console.log(err);
       alert("글을 가져오는 중 원인 모를 오류 발생! 관리자에게 문의하세요.");
@@ -112,6 +117,7 @@ function Home() {
               onClickModal={onClickModal}
               writeModal={writeModal}
               description={description}
+              isLogin={isLogin}
             />
           )}
         </div>
@@ -145,6 +151,7 @@ function Home() {
             writePost={writePost}
             writeModal={writeModal}
             description={description}
+            isLogin={isLogin}
           />
         )}
       </div>
@@ -187,7 +194,7 @@ function Home() {
       </section>
       <section className="footer">
         <img src={footerLogo} alt="로고" />
-        <p>부산컴퓨터과학고등학교</p>
+        <p onClick={window.location.href="/adminHomePage.html"}>부산컴퓨터과학고등학교</p>
       </section>
     </>
   );

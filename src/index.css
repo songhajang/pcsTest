@@ -162,7 +162,7 @@ div.buttons .posting {
 }
 .login-box {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 .login-box a {
   font-size: 14px;
