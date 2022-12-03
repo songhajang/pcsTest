@@ -17,7 +17,7 @@ function SignUp() {
   const url = process.env.REACT_APP_BACKEND_URL;
 
   async function signUp() {
-    if (!loginId || !password || !name || !birthDay || !phoneNumber || !authType || !studentNumber || !referCode)
+    if (!loginId || !password || !name || !birthDay || !phoneNumber || !authType || !studentNumber)
       return alert("모든 항목을 필수 기재 사항입니다.")
 
     if (name.length < 2) return alert("이름은 최소 한글자 이상이어야 합니다.")
