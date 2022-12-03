@@ -194,7 +194,7 @@ function Home() {
       </section>
       <section className="footer">
         <img src={footerLogo} alt="로고" />
-        <p onClick={window.location.href="/adminHomePage.html"}>부산컴퓨터과학고등학교</p>
+        <p onClick={() => window.location.href="/adminHomePage.html"}>부산컴퓨터과학고등학교</p>
       </section>
     </>
   );
