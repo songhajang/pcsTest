@@ -43,3 +43,10 @@
 #authRadio > span > input {
   margin: 5px;
 }
+
+#infoAgree {
+  width: 304px;
+  margin: auto;
+  margin-bottom: 20px;
+  text-align: center;
+}
