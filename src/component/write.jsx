@@ -48,7 +48,7 @@ function Write({
       <div className="login-box">
         {
           isLogin ? (
-            <a href="/myPage">마이페이지</a>
+            <a href="/my-page">마이페이지</a>
           ) : (
             <a href="/login">로그인하러 가기</a>
           )
