@@ -31,6 +31,8 @@ function Write({
         id=""
         cols="30"
         rows="10"
+        maxLength={100}
+        minLength={5}
         placeholder="작성할 글을 입력해주세요."
         value={description}
         onChange={(e) => setDescription(e.target.value)}
