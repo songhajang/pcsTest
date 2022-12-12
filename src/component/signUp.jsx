@@ -7,7 +7,7 @@ import "./css/signUp.css";
 function SignUp() {
   const [loginId, setLoginId] = useState("");
   const [password, setPassword] = useState("");
-  const [checkPwd, setCheckPwd] = useState(false);
+  const [checkPwd, setCheckPwd] = useState();
   const [name, setName] = useState("");
   const [birthDay, setBirthDay] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
