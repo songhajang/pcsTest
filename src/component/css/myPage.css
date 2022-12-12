@@ -13,6 +13,7 @@
     height: 120px;
     left: 50%;
     top: 10%;
+    cursor: pointer;
     transform: translate(-50%, -50%);
 }
 
@@ -31,6 +32,7 @@
 
 #myTitle {
     color: #3f579b;
+    cursor: pointer;
 }
 
 .info-container {
@@ -144,8 +146,3 @@
     background-color: #fff;
 }
 
-.code-box .del-btn {
-    font-size: 0.9rem;
-    color: #db1a1a;
-    cursor: pointer;
-}
