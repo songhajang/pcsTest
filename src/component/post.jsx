@@ -44,7 +44,7 @@ function Post({ data, code, liked, reported }) {
   const report = async () => {
     if (isReportWorking) return
 
-    const reason = ""
+    let reason = ""
     if (!isReported) 
       reason = prompt("신고 사유 \n\n명확한 이유 없는 신고 혹은 장난성 신고는 계정 정지 처분을 당할 수 있습니다.")
 
