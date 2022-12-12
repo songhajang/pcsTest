@@ -63,8 +63,8 @@ function SignUp() {
 
       window.location.href = "/login";
     } catch (err) {
-      if (err?.response?.data.message == "student already sign up") {
-        alert("이미 존재하는 학생입니다.");
+      if (err?.response?.data == "student already sign up") {
+        alert("이미 존재하는 학생입니다.\n중복 불가: 아이디, 학번");
       }
       alert("로그인중 문제가 발생하였습니다. 관리자에게 문의해주세요.");
     } finally {
