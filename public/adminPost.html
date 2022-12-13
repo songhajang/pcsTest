@@ -13,6 +13,7 @@
         <div id="filter">
             작성자 ID: <input type="number" id="createdBy">
             신고 횟수: <input type="number" id="reportedCount">
+            신고된 게시물만 보기: <input type="checkbox" id="isReportPost">
             <br />
             <br />
             <button onclick="callRejectPost()">검색</button>
@@ -40,13 +41,29 @@
             if (isWorking) return
             const createdBy = document.querySelector("#createdBy").value
             const reportedCount = document.querySelector("#reportedCount").value
+            const isReportPost = document.querySelector("#isRepotPost").checked
 
             try {
                 isWorking = true
-                const { data } = await axios.post(
-                    `${url}/admin/posts/reject?${createdBy ? "memberId=" + createdBy + "&" : ""}${reportedCount ? "reportCount=" + reportedCount : ""}`,
-                    {}, {withCredentials: true}
-                )
+
+                let res 
+
+                if (isReportPost) {
+                    const { data } = await axios.post(
+                        `${url}/admin/posts?${createdBy ? "memberId=" + createdBy + "&" : ""}${reportedCount ? "reportCount=" + reportedCount : ""}`,
+                        {}, {withCredentials: true}
+                    )
+
+                    res = data
+                } else {
+
+                    const { data } = await axios.post(
+                        `${url}/admin/posts/reject?${createdBy ? "memberId=" + createdBy + "&" : ""}${reportedCount ? "reportCount=" + reportedCount : ""}`,
+                        {}, {withCredentials: true}
+                    )
+
+                    res = data
+                }
                 let listArea = document.querySelector("#adminPostListArea")
                 let html = ``
                 
@@ -62,7 +79,7 @@
                     </tr>
                     `
                     
-                    data.data.forEach(o => {
+                    res.data.forEach(o => {
                         html += `
                         <tr>
                             <td>${o.postId}</td>

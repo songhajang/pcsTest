@@ -31,6 +31,8 @@ function Write({
         id=""
         cols="30"
         rows="10"
+        maxLength={100}
+        minLength={5}
         placeholder="작성할 글을 입력해주세요."
         value={description}
         onChange={(e) => setDescription(e.target.value)}
@@ -48,7 +50,7 @@ function Write({
       <div className="login-box">
         {
           isLogin ? (
-            <a href="/myPage">마이페이지</a>
+            <a href="/my-page">마이페이지</a>
           ) : (
             <a href="/login">로그인하러 가기</a>
           )

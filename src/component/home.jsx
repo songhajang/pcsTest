@@ -162,8 +162,8 @@ function Home() {
         </h1>
       </section>
       <section className="alarm">
-        <Alarm title="글 작성할때 욕설은 금지입니다." />
-        <Alarm title="로그인 후 이용 부탁드립니다." />
+        <Alarm title="글 작성시 비속어는 금지입니다." />
+        <Alarm title="컴대전 문의 센터: https://discord.gg/qbpmyNFkmr" />
       </section>
       <section
         className="posts"
