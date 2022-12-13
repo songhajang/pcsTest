@@ -53,6 +53,7 @@
                         <th style="width: 10%;">상태</th>
                         <th style="width: 10%;">작성한 게시물 리스트</th>
                         <th style="width: 10%;" colspan="2">승인, 거절</th>
+                        <th style="width: 10%;">개인정보 확인</th>
                     </tr>
                         `
                         
@@ -65,6 +66,7 @@
                             <td onclick="location='/adminPost.html'">리스트 보기</td>
                             <td onclick="acceptMember(${o.id})">승인</td>
                             <td onclick="rejectMember(${o.id})">거절</td>
+                            <td onclick="callPersonal(${o.id})">개인정보 확인</td>
                         </tr>
                         ` 
                     })
@@ -109,33 +111,39 @@
                 isWorking = false
             }
         }
-
-        async function callReportList(userId) {
+        
+        async function callPersonal(memberId) {
             if (isWorking) return
             let listArea = document.querySelector("#reportList > table")
-            const { data } = await axios.post(`${url}/admin/code-list/${userId}`, {}, {withCredentials: true})
+            
+            try {
+                const { data } = await axios.post(
+                    `${url}/admin/personal-info/${memberId}`,
+                    {}, 
+                    {withCredentials: true}
+                )
 
-            listArea.innerHTML = `
-                <tr>
-                    <th style="width: 10%;">추천 코드 ID</th>
-                    <th style="width: 10%;">코드</th>
-                    <th style="width: 10%;">코드 사용자 ID</th>
-                    <th style="width: 10%;">제작 시간</th>
-                </tr>
-            `
-
-            data.data.forEach(o => {
-                listArea.innerHTML += `
-                <tr>
-                    <td>5</td>
-                    <td>qe9vybfiv1o4</td>
-                    <td>2022-11-27 22:56:12</td>
-                </tr>
+                listArea.innerHTML = `
+                <h3>
+                    <pre>${JSON.stringify(data.data, null, 4)}</pre>
+                </h3>
                 `
-            })
 
-            document.getElementById("reportList").className = "block"
-            document.querySelector("#background").className = "block"
+                document.getElementById("reportList").className = "block"
+                document.querySelector("#background").className = "block"
+            } catch(e) {
+                if (e.response?.status == 401) {
+                    alert("관리자 계정으로 로그인후 이용해 주십시오.")
+                    location.href="/login"
+                    return
+                } 
+                if (e.response?.status == 403) {
+                    alert("권한이 부족합니다. 유저의 개인정보는 함부로 열람할 수 없습니다.")
+                    return
+                }
+
+                alert("이용자 정보들을 가져오는중 알수없는 오류 발생. 개발자에게 문의하세요")
+            }
         }
         
         async function acceptMember(userId) {
