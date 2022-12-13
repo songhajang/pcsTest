@@ -10,7 +10,7 @@ export default () => {
     const [postList, setPostList] = useState()
     const [postLoading, setPostLoading] = useState(true)
     const [viewMode, setViewMode] = useState("post")
-    const [codeList, setCodeList] = useState()
+    const [codeList, setCodeList] = useState([])
     const [userInfo, setUserInfo] = useState({
         name: "-",
         std_num: "-",
@@ -48,7 +48,7 @@ export default () => {
             const res = data.data
 
             setUserInfo(res)
-            
+
             if (res.auth_type == "DIRECT") {
                 myCode()
 
