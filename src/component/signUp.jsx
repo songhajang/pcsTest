@@ -63,8 +63,13 @@ function SignUp() {
 
       window.location.href = "/login";
     } catch (err) {
-      if (err?.response?.data == "student already sign up") {
+      if (err?.response?.status == 409) {
         alert("이미 존재하는 학생입니다.\n중복 불가: 아이디, 학번");
+        return
+      }
+      if (err?.response?.status == 404) {
+        alert("사용 가능한 추천코드를 찾지 못했습니다.");
+        return
       }
       alert("로그인중 문제가 발생하였습니다. 관리자에게 문의해주세요.");
     } finally {
@@ -74,10 +79,6 @@ function SignUp() {
 
   function locationToHome() {
     window.location.href = "/";
-  }
-
-  function changeAuthType() {
-    setAuthType(document.querySelector('input[name="authType"]:checked').value);
   }
 
   return (
@@ -180,6 +181,7 @@ function SignUp() {
               id="direct"
               name="authType"
               value="DIRECT"
+              onChange={() => setAuthType(document.querySelector('input[name="authType"]:checked').value)}
               defaultChecked
             />
           </span>
@@ -191,6 +193,7 @@ function SignUp() {
               id="indirect"
               name="authType"
               value="INDIRECT"
+              onChange={() => setAuthType(document.querySelector('input[name="authType"]:checked').value)}
             />
           </span>
         </span>
