@@ -14,6 +14,8 @@
             유저 ID: <input type="number" id="userId">
             <br />
             승인 대기중인 계정 보기: <input type="checkbox" id="isPending">
+            <br />
+            관리자 계정만 보기: <input type="checkbox" id="onlyAdmin">
             <br /> <br />
             <button onclick="callMembers()">검색</button>
         </div>
@@ -38,11 +40,12 @@
 
             const userId = document.querySelector("#userId").value
             const isPending = document.querySelector("#isPending").checked
+            const onlyAdmin = document.querySelector("#onlyAdmin").checked
 
             try {
                 isWorking = true
                 const { data } = await axios.post(
-                    isPending ? `${url}/admin/members/pending` : `${url}/admin/members${userId ? "?memberId=" + userId : ""}`,
+                    isPending ? `${url}/admin/members/pending` : `${url}/admin/members?${userId ? "memberId=" + userId : ""}&onlyAdmin=${onlyAdmin}`,
                     {}, {withCredentials: true}
                 )
                 let listArea = document.querySelector("#adminPostListArea")
