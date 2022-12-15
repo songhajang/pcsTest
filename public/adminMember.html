@@ -27,7 +27,8 @@
     </div>
 
     <script>
-        const url = "https://daejeon-production.up.railway.app"
+        // const url = "https://daejeon-production.up.railway.app"
+        const url = "https://localhost"
         let isWorking = false
 
         callMembers()
@@ -124,14 +125,58 @@
                 )
 
                 listArea.innerHTML = `
-                <h3>
+                <h2>
                     <pre>${JSON.stringify(data.data, null, 4)}</pre>
-                </h3>
+                </h2>
                 `
+
+                if (data.data.role == "ROLE_TIER0")
+                    listArea.innerHTML += `
+                        <button onclick="authorization('tier1', ${memberId})">관리자 권한 부여 - 1</button>`
+                if (data.data.role == "ROLE_TIER1") 
+                    listArea.innerHTML += `
+                    <button onclick="authorization('tier2', ${memberId})">관리자 권한 부여 - 2</button>
+                    <button onclick="authorization('tier0', ${memberId})">관리자 권한 삭제</button>
+                    `
 
                 document.getElementById("reportList").className = "block"
                 document.querySelector("#background").className = "block"
             } catch(e) {
+                if (e.response?.status == 401) {
+                    alert("관리자 계정으로 로그인후 이용해 주십시오.")
+                    location.href="/login"
+                    return
+                } 
+                if (e.response?.status == 403) {
+                    alert("권한이 부족합니다. 유저의 개인정보는 함부로 열람할 수 없습니다.")
+                    return
+                }
+
+                alert("이용자 정보들을 가져오는중 알수없는 오류 발생. 개발자에게 문의하세요")
+            }
+        }
+
+        async function authorization(tierName, memberId) {
+            try {
+                if (
+                    !confirm(`관리자 권한[${tierName}] 으로 권한을 부여합니다.\n권한을 부여하시겠습니까?`) ||
+                    !confirm(`2차 확인\n정말 권한을 부여하시겠습니까?`)
+                ) return 
+                
+                
+                let role 
+                if (!["tier0", "tier1", "tier2"].includes(tierName)) return 
+                role = `ROLE_${String(tierName).toUpperCase()}`
+
+                const { data } = await axios.post(
+                    `${url}/admin/member/set-role/${memberId}/${role}`,
+                    {}, 
+                    {withCredentials: true}
+                )
+
+                document.getElementById("reportList").className = "none"
+                document.querySelector("#background").className = "none"
+            } catch (e) {
                 if (e.response?.status == 401) {
                     alert("관리자 계정으로 로그인후 이용해 주십시오.")
                     location.href="/login"
