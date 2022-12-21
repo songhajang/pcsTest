@@ -18,7 +18,7 @@
 }
 
 #my-page {
-    width: 55%;
+    width: 70%;
     height: 80%;
     margin: auto;
     display: flex;
@@ -43,7 +43,7 @@
     border-radius: 10px;
     height: 25%;
     background-color: #fff;
-    overflow: auto;
+    overflow: hidden;
 }
 
 .info-container section {
@@ -158,3 +158,48 @@
     background-color: #fff;
 }
 
+/*** TABLET ***/
+@media (width <= 768px) { 
+    #logo {
+        width: 100px;
+        height: 100px;
+        top: 15%;
+    }
+
+    #my-page {
+        height: 70%;
+    }
+
+    #myTitle {
+        font-size: 1.8rem;
+    }
+
+    .user-info {
+        font-size: 1.2rem;
+    }
+
+    .info {
+        font-size: 1.1rem;
+    }
+}
+
+/*** MOBILE ***/
+@media (width <= 500px) {
+    #logo {
+        width: 80px;
+        height: 80px;
+        top: 15%;
+    }
+
+    #myTitle {
+        font-size: 1.6rem;
+    }
+
+    .user-info {
+        font-size: 1rem;
+    }
+
+    .info {
+        font-size: 0.9rem;
+    }
+}

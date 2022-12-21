@@ -38,6 +38,7 @@ body::after {
   height: 400px;
   background: url(./img/bg2.png) no-repeat;
   background-size: 100%;
+  z-index: -1;
 }
 /* loading 창 */
 .loading {
